@@ -21,9 +21,10 @@ var showText = function(target, message, index, interval) {
 function start() {
   title.innerHTML = "welkom";
   image.src = "img/stage1.jpg";
-  text.innerHTML = showText("#text",  "iit’s Saturday evening, your friends (john, ally and kate) and u just came out of a bar and ally and kate decided to go home.", 0, 10);
+  showText("#text",  " it’s Saturday evening, your friends (john, ally and kate) and u just came out of a bar and ally and kate decided to go home.", 0, 10);
 
   options.innerHTML = "";
+  text.innerHTML = "";
 
   option1.innerHTML = "Start the game.";
   option1.setAttribute("onclick", "barOutside();");
@@ -85,7 +86,7 @@ function normalRoute() {
   options.appendChild(option1);
 }
 
-function setpryerTrue() {
+function setPryerTrue() {
   pryer = true;
   bedroomCabin();
   extraText.innerHTML = "*<b>YOU'VE FOUND A PRYER</b>*";
@@ -98,7 +99,7 @@ function bedroomCabin() {
   text.innerHTML = "";
 
   option1.innerHTML = "Check the room for usable objects.";
-  option1.setAttribute("onclick", "setpryerTrue()");
+  option1.setAttribute("onclick", "setPryerTrue()");
   options.appendChild(option1);
 
   option2.innerHTML = "Go to another room.";
@@ -106,7 +107,7 @@ function bedroomCabin() {
   if(pryer === true){
     option2.setAttribute("onclick", "rooms();");
   } else {
-    option2.setAttribute("onclick", "alert('The door is locked. You need something to open it.'); ");
+    option2.setAttribute("onclick", "alert('The door is locked. You need something to open it.')" );
   }
   options.appendChild(option2);
 }
@@ -129,7 +130,6 @@ function rooms() {
   option4.innerHTML = "let's got to the basement";
   option4.setAttribute("onclick", "basementCabin();");
   options.appendChild(option4);
-
 }
 
 function livingRoomCabin() {
@@ -148,11 +148,19 @@ function livingRoomCabin() {
   options.appendChild(option2);
 
   option3.innerHTML = "Open the front door.";
-  option3.setAttribute("onclick", "outsideCabin();");
+  option3.setAttribute("onclick", "");
+  if(key === true){
+    option3.setAttribute("onclick", "outsideCabin();");
+  } else {
+    option3.setAttribute("onclick", "alert('The door is locked.')" );
+  }
   options.appendChild(option3);
-
 }
-
+function setKnifeTrue() {
+  knife = true;
+  atticCabin();
+  extraText.innerHTML = "*<b>YOU FOUND A KNIFE</b>*";
+}
 function atticCabin() {
   title.innerHTML = "attic";
   image.src = "img/stage4attic.jpg";
@@ -161,7 +169,7 @@ function atticCabin() {
   text.innerHTML = "";
 
   option1.innerHTML = "Check the room for usable objects.";
-  option1.setAttribute("onclick", "();");
+  option1.setAttribute("onclick", "setKnifeTrue();");
   options.appendChild(option1);
 
   option2.innerHTML = "Go to another room.";
@@ -169,6 +177,11 @@ function atticCabin() {
   options.appendChild(option2);
 }
 
+function setKeyTrue() {
+  key = true;
+  basementCabin();
+  extraText.innerHTML = "*<b>YOU FOUND A KEY</b><br><b>John</b>: That looks like *";
+}
 function basementCabin() {
   title.innerHTML = "basement";
   image.src = "img/stage4basement.jpg";
@@ -177,7 +190,7 @@ function basementCabin() {
   text.innerHTML = "";
 
   option1.innerHTML = "Check the room for usable objects.";
-  option1.setAttribute("onclick", "();");
+  option1.setAttribute("onclick", "setKeyTrue();");
   options.appendChild(option1);
 
   option2.innerHTML = "Go to another room.";
@@ -191,29 +204,75 @@ function outsideCabin() {
   image.src = "img/stage5.jpg";
 
   options.innerHTML = "";
+  text.innerHTML = "John: 	finally were outside I hope that guy won’t show up.<br>I think it’s best that we go to find a town or a road nearby.<br>(….):	yeah that’s the best idea<br>*leaves breaking in the distance*<br>John: 	Do you hear that (….).<br> I think that the  guy is coming back.<br>(….):	we need to make a run for it!<br>Stranger:  Get back here you two!<br> You can’t leave yet we need you for the ritual!<br>*stranger runs towards you*<br>John: look out (….) .<br>";
+
+  option1.innerHTML = "*RUN AWAY";
+  option1.setAttribute("onclick", "strangerHit();");
+  options.appendChild(option1);
+  if (knife === true) {
+    option2.innerHTML = "*STAB THE STRANGER*";
+    option2.setAttribute("onclick", "strangerKil();");
+    options.appendChild(option2);
+  }
+}
+function dead() {
+  title.innerHTML = "YOU DEAD";
+  image.src = "img/died.jpg";
+
+  options.innerHTML = "";
   text.innerHTML = "";
 
-  option1.innerHTML = "Check the room for usable objects.";
-  option1.setAttribute("onclick", "(); ");
+  option1.innerHTML = "Restart";
+  option1.setAttribute("onclick", "start(); ");
   options.appendChild(option1);
+}
+function strangerHit() {
+  dead();
+  text.innerHTML = "the stranger ran faster, he hit you over the head and you died."
+}
+function strangerKil() {
+  outsideCabin();
+  text.innerHTML = "John:	you killed him! At least he can’t kill us now let’s go now there could be more people nearby."
 
-  option2.innerHTML = "Go to another room.";
-  option2.setAttribute("onclick", "();");
+  options.innerHTML = "";
+
+  option2.innerHTML = "next";
+  option2.setAttribute("onclick", "outsideRoad();");
   options.appendChild(option2);
 }
-
 function outsideRoad() {
   title.innerHTML = "A road";
   image.src = "img/stage6.jpg";
 
   options.innerHTML = "";
-  text.innerHTML = "";
+  text.innerHTML = "John: 	finally we found a road I think we should wait for car to come by don’t you think (….)?";
 
-  option1.innerHTML = "Check the room for usable objects.";
+  option1.innerHTML = "We should stand on the road so cars can see us better.";
+  option1.setAttribute("onclick", "standOnRoad(); ");
+  options.appendChild(option1);
+
+  option2.innerHTML = "that’s smart we should do that.";
+  option2.setAttribute("onclick", "standNextRoad();");
+  options.appendChild(option2);
+}
+
+function standOnRoad() {
+  dead();
+  text.innerHTML = "John: Look (….) there is a car coming.<br> Stranger in a car: *hits the break*<br> .........<br> *BAM*"
+}
+function standNextRoad() {
+  outsideRoad();
+  options.innerHTML = "";
+  text.innerHTML = "John: Look (….) there is a car coming.<br>(….): STOP THE CAR WE NEED HELP!<br>Stranger in a car:  *hits the break*<br>What is going on with the two of you?<br> "
+
+  option1.innerHTML = "A stranger kidnaped us and locked us up in a cabin we barely got out.";
   option1.setAttribute("onclick", "(); ");
   options.appendChild(option1);
 
-  option2.innerHTML = "Go to another room.";
+  option2.innerHTML = "we got lost in the woods and decided to stand by the road waiting for someone to pas by.";
   option2.setAttribute("onclick", "();");
   options.appendChild(option2);
+
+
+
 }
