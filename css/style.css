@@ -1,31 +1,56 @@
+@font-face {
+    font-family: gamefont;
+    src: url(../fonts/PokemonGB.ttf);
+}
+
 * {
-  font-family: "Courier New", Courier, monospace;
-  font-weight: 1000;
+  font-family: gamefont;
 }
-
+body {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  -webkit-overflow-scrolling: auto;
+  background: url(../img/background.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+main {
+  padding: 20px;
+  width: 680px;
+  height: 605px;
+  background-color: black;
+  color: white;
+}
 h1, h2{
-  font-family: "Lucida Console", Monaco, monospace;
 }
 
+footer {
+  width: 595px;
+}
+#boximage {
+  height: 325px;
+}
+#image {
+  width: 100%;
+  height: auto;
+  max-height: 325px;
+}
+ul {
+  padding: 0;
+}
 li {
+  background-color: black;
+  color: white;
   text-decoration: none;
   list-style-type: none;
-}
-footer {
-  height: 160px;
-  width: 300px;
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: auto;
-  background-color: rgba(150, 150, 150, 0.6);
-}
-li {
-  width: 250px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  background-color: white;
+  padding: 15px 10px;
+  margin-bottom:5px;
+  font-size: 15px;
   border: solid 1px rgba(200, 200, 200, 1);
-  margin-bottom: 10px;
 }
